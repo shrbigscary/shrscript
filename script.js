@@ -1,4 +1,4 @@
-const apiUrl = 'https://api.github.com/repos/KeoLotso/KeosRandomStuff/contents';
+const apiUrl = 'https://api.github.com/repos/KeoLotso/KeosRandomStuff/contents'; 
 let currentFiles = [];
 let currentFolder = '';
 let currentSortMode = 'A-Z';
@@ -21,8 +21,8 @@ function sortFilesIntoFolders(files) {
 
     const sounds = [];
     const models = [];
-    const images = [];
     const scripts = [];
+    const images = [];
 
     files.forEach(file => {
         const extension = file.name.split('.').pop().toLowerCase();
@@ -32,17 +32,18 @@ function sortFilesIntoFolders(files) {
             } else if (modelExtensions.includes(extension)) {
                 models.push(file);
             } else if (imageExtensions.includes(extension)) {
-                images.push(file);
+                images.push(file); 
             } else if (scriptExtensions.includes(extension)) {
                 scripts.push(file);
             }
         }
     });
 
-    displayFolders(sounds, models, images, scripts);
+    displayFolders(sounds, models, scripts);
+    displayFiles(images);
 }
 
-function displayFolders(sounds, models, images, scripts) {
+function displayFolders(sounds, models, scripts) {
     const folderList = document.getElementById('folder-list');
     folderList.innerHTML = '';
 
@@ -51,9 +52,6 @@ function displayFolders(sounds, models, images, scripts) {
     }
     if (models.length > 0) {
         createFolder(folderList, '3D Models', models, 'models-icon.png');
-    }
-    if (images.length > 0) {
-        createFolder(folderList, 'Images', images, 'images-icon.png');
     }
     if (scripts.length > 0) {
         createFolder(folderList, 'Scripts', scripts, 'scripts-icon.png');
@@ -82,7 +80,7 @@ function openFolder(folderName, files) {
     fileList.style.display = 'block';
     backButton.style.display = 'inline-block';
     searchBar.style.display = 'inline-block';
-    sortOptions.style.display = 'inline-block';
+    sortOptions.style.display = 'none'; // Hide sort bulshit another time
     fileList.innerHTML = `<h2>${folderName}</h2>`;
 
     displayFiles(currentFiles);
@@ -128,18 +126,17 @@ function sortFiles(files) {
             return files.sort((a, b) => a.name.localeCompare(b.name));
         case 'Z-A':
             return files.sort((a, b) => b.name.localeCompare(a.name));
-        case 'Newest':
-            return files.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-        case 'Oldest':
-            return files.sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
         default:
             return files;
     }
 }
 
-document.getElementById('sort-options').addEventListener('change', (event) => {
-    currentSortMode = event.target.value;
-    displayFiles(currentFiles);
+document.getElementById('sort-options').style.display = 'none'; // Hide sort Bulshity thingys yk
+
+document.getElementById('search-bar').addEventListener('input', (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredFiles = currentFiles.filter(file => file.name.toLowerCase().includes(searchTerm));
+    displayFiles(filteredFiles);
 });
 
 document.getElementById('back-button').addEventListener('click', () => {
@@ -147,13 +144,11 @@ document.getElementById('back-button').addEventListener('click', () => {
     const fileList = document.getElementById('file-list');
     const backButton = document.getElementById('back-button');
     const searchBar = document.getElementById('search-bar');
-    const sortOptions = document.getElementById('sort-options');
 
     folderList.style.display = 'block';
     fileList.style.display = 'none';
     backButton.style.display = 'none';
     searchBar.style.display = 'none';
-    sortOptions.style.display = 'none';
 });
 
 document.getElementById('theme-toggle').addEventListener('click', () => {
