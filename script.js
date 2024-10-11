@@ -47,16 +47,16 @@ function displayFolders(sounds, models, images, scripts) {
     folderList.innerHTML = '';
 
     if (sounds.length > 0) {
-        createFolder(folderList, 'Sounds', sounds, 'images/sounds-icon.png');
+        createFolder(folderList, 'Sounds', sounds, 'sounds-icon.png');
     }
     if (models.length > 0) {
-        createFolder(folderList, '3D Models', models, 'images/models-icon.png');
+        createFolder(folderList, '3D Models', models, 'models-icon.png');
     }
     if (images.length > 0) {
-        createFolder(folderList, 'Images', images, 'images/images-icon.png');
+        createFolder(folderList, 'Images', images, 'images-icon.png');
     }
     if (scripts.length > 0) {
-        createFolder(folderList, 'Scripts', scripts, 'images/scripts-icon.png');
+        createFolder(folderList, 'Scripts', scripts, 'scripts-icon.png');
     }
 }
 
