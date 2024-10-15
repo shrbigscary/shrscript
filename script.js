@@ -18,13 +18,13 @@ function sortFilesIntoFolders(files) {
     const modelExtensions = ['fbx', 'obj', 'blend'];
     const imageExtensions = ['png', 'jpeg', 'jpg'];
     const scriptExtensions = ['cs'];
-    const unitypackExtensions = ['unitypackage']
+    const unityPackageExtensions = ['unitypackage'];
 
     const sounds = [];
     const models = [];
     const scripts = [];
     const images = [];
-    const pack = [];
+    const unityPackages = [];
 
     files.forEach(file => {
         const extension = file.name.split('.').pop().toLowerCase();
@@ -34,20 +34,20 @@ function sortFilesIntoFolders(files) {
             } else if (modelExtensions.includes(extension)) {
                 models.push(file);
             } else if (imageExtensions.includes(extension)) {
-                images.push(file); 
+                images.push(file);
             } else if (scriptExtensions.includes(extension)) {
                 scripts.push(file);
-            } else if (unitypackExtensions.includes(extension)){
-                pack.push(file);
+            } else if (unityPackageExtensions.includes(extension)) {
+                unityPackages.push(file);
             }
         }
     });
 
-    displayFolders(sounds, models, scripts);
+    displayFolders(sounds, models, scripts, unityPackages);
     displayFiles(images);
 }
 
-function displayFolders(sounds, models, scripts) {
+function displayFolders(sounds, models, scripts, unityPackages) {
     const folderList = document.getElementById('folder-list');
     folderList.innerHTML = '';
 
@@ -60,8 +60,8 @@ function displayFolders(sounds, models, scripts) {
     if (scripts.length > 0) {
         createFolder(folderList, 'Scripts', scripts, 'scripts-icon.png');
     }
-    if (pack.lengh > 0){
-        createFolder(folderList, 'Unity Packages', pack, 'pack-icon.png')
+    if (unityPackages.length > 0) {
+        createFolder(folderList, 'Unity Packages', unityPackages, 'pack-icon.png');
     }
 }
 
@@ -87,7 +87,7 @@ function openFolder(folderName, files) {
     fileList.style.display = 'block';
     backButton.style.display = 'inline-block';
     searchBar.style.display = 'inline-block';
-    sortOptions.style.display = 'none'; // Hide sort bulshit another time
+    sortOptions.style.display = 'none';
     fileList.innerHTML = `<h2>${folderName}</h2>`;
 
     displayFiles(currentFiles);
@@ -138,7 +138,7 @@ function sortFiles(files) {
     }
 }
 
-document.getElementById('sort-options').style.display = 'none'; // Hide sort Bulshity thingys yk
+document.getElementById('sort-options').style.display = 'none';
 
 document.getElementById('search-bar').addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
