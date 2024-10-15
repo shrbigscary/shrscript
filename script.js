@@ -18,11 +18,13 @@ function sortFilesIntoFolders(files) {
     const modelExtensions = ['fbx', 'obj', 'blend'];
     const imageExtensions = ['png', 'jpeg', 'jpg'];
     const scriptExtensions = ['cs'];
+    const unitypackExtensions = ['unitypackage']
 
     const sounds = [];
     const models = [];
     const scripts = [];
     const images = [];
+    const pack = [];
 
     files.forEach(file => {
         const extension = file.name.split('.').pop().toLowerCase();
@@ -35,6 +37,8 @@ function sortFilesIntoFolders(files) {
                 images.push(file); 
             } else if (scriptExtensions.includes(extension)) {
                 scripts.push(file);
+            } else if (unitypackExtensions.includes(extension)){
+                pack.push(file);
             }
         }
     });
@@ -55,6 +59,9 @@ function displayFolders(sounds, models, scripts) {
     }
     if (scripts.length > 0) {
         createFolder(folderList, 'Scripts', scripts, 'scripts-icon.png');
+    }
+    if (pack.lengh > 0){
+        createFolder(folderList, 'Unity Packages', pack, 'pack-icon.png')
     }
 }
 
